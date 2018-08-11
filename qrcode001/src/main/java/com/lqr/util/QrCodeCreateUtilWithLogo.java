@@ -5,6 +5,7 @@ import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
@@ -23,14 +24,14 @@ import com.google.zxing.qrcode.decoder.ErrorCorrectionLevel;
 /**
  * 画制定logo和制定描述的二维码
  * 
- *
+ * 这个比较好用
  */
 public class QrCodeCreateUtilWithLogo {
     private static final int QRCOLOR = 0xFF000000; // 默认是黑色
     private static final int BGWHITE = 0xFFFFFFFF; // 背景颜色
 
-    private static final int WIDTH = 400; // 二维码宽
-    private static final int HEIGHT = 400; // 二维码高
+    private static final int WIDTH = 300; // 二维码宽
+    private static final int HEIGHT = 300; // 二维码高
 
     // 用于设置QR二维码参数
     private static Map<EncodeHintType, Object> hints = new HashMap<EncodeHintType, Object>() {
@@ -44,7 +45,12 @@ public class QrCodeCreateUtilWithLogo {
 
     public static void main(String[] args) throws WriterException {
     	//获取logo路径
-        File logoFile = new File(QrCodeCreateUtilWithLogo.class.getClassLoader().getResource("logo.jpg").getPath());
+    	URL logoFileUrl = QrCodeCreateUtilWithLogo.class.getClassLoader().getResource("logwwwo.jpg");
+    	File logoFile = null;
+    	if(logoFileUrl != null) {
+    		logoFile = new File(logoFileUrl.getPath());
+    	}
+    	
         File QrCodeFile = new File("D:\\05.png");
         String url = "https://www.baidu.com/";
         String note = "访问百度连接";
