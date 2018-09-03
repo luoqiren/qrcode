@@ -57,12 +57,12 @@ public class QrCodeCreateUtilWithLogo {
      * @return image 返回二维码的缓冲图片
      */
     public static BufferedImage drawLogoQRCode(File logoFile, String note, String qrUrl) {
-    	BufferedImage image = new BufferedImage(QR_WIDTH, QR_HEIGHT, BufferedImage.TYPE_INT_RGB);
+    	BufferedImage image = null;
     	try {
     		MultiFormatWriter multiFormatWriter = new MultiFormatWriter();
     		// 参数顺序分别为：编码内容，编码类型，生成图片宽度，生成图片高度，设置参数
     		BitMatrix bm = multiFormatWriter.encode(qrUrl, BarcodeFormat.QR_CODE, QR_WIDTH, QR_HEIGHT, hints);
-
+    		image = new BufferedImage(QR_WIDTH, QR_HEIGHT, BufferedImage.TYPE_INT_RGB);
             // 开始利用二维码数据创建Bitmap图片，分别设为黑（0xFFFFFFFF）白（0xFF000000）两色
             for (int x = 0; x < QR_WIDTH; x++) {
                 for (int y = 0; y < QR_HEIGHT; y++) {
@@ -154,7 +154,7 @@ public class QrCodeCreateUtilWithLogo {
         //创建储存图片二进制流的输出流
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         //将二进制数据写入ByteArrayOutputStream
-        ImageIO.write(image, "jpg", baos);
+        ImageIO.write(image, "png", baos);
         return baos;
     }
     
@@ -168,7 +168,7 @@ public class QrCodeCreateUtilWithLogo {
     public static void drawLogoQRCodeToLocalFile(File logoFile, File qrCodeFile, String qrUrl, String note) {
     	BufferedImage image = drawLogoQRCode(logoFile, note, qrUrl);
     	try {
-			ImageIO.write(image, "jpg", qrCodeFile);
+			ImageIO.write(image, "png", qrCodeFile);
 		} catch (IOException e) {
 			e.printStackTrace();
 		} 
@@ -176,13 +176,14 @@ public class QrCodeCreateUtilWithLogo {
     
     public static void main(String[] args) throws WriterException {
     	//获取logo路径
-    	URL logoFileUrl = QrCodeCreateUtilWithLogo.class.getClassLoader().getResource("logwwwo.jpg");
+    	URL logoFileUrl = QrCodeCreateUtilWithLogo.class.getClassLoader().getResource("logo.jpg");
     	File logoFile = null;
     	if(logoFileUrl != null) {
+    		System.out.println(logoFileUrl.getPath());
     		logoFile = new File(logoFileUrl.getPath());
     	}
     	
-        File QrCodeFile = new File("D:\\06.jpg");
+        File QrCodeFile = new File("D:\\06.png");
         String url = "https://www.baidu.com/";
         String note = "访问百度连接很长很长的文字描述怎么办呢？你说要换几行来测试呀？？等等等的等等等";
         drawLogoQRCodeToLocalFile(logoFile, QrCodeFile, url, note);

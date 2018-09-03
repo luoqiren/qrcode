@@ -9,6 +9,6 @@
 <title>Test here</title>
 </head>
 <body>
-<img alt="二维码" src="<c:url value="/QrCodeSevlet"/>" />
+<img alt="二维码" src="<c:url value="/QrCodeSevlet"/>" border="1"/>
 </body>
 </html>

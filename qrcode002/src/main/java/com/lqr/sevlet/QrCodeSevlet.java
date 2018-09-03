@@ -1,7 +1,9 @@
 package com.lqr.sevlet;
 
 import java.io.ByteArrayOutputStream;
+import java.io.File;
 import java.io.IOException;
+import java.net.URL;
 
 import javax.servlet.ServletException;
 import javax.servlet.ServletOutputStream;
@@ -28,9 +30,16 @@ public class QrCodeSevlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		ByteArrayOutputStream out = QrCodeCreateUtilWithLogo.encodeDrawLogoQRCode(null, "Test2", "https://www.baidu.com/");
+		//»ñÈ¡logoÂ·¾¶
+    	URL logoFileUrl = QrCodeCreateUtilWithLogo.class.getClassLoader().getResource("logo.jpg");
+    	File logoFile = null;
+    	if(logoFileUrl != null) {
+    		logoFile = new File(logoFileUrl.getPath());
+    	}
+		
+		ByteArrayOutputStream out = QrCodeCreateUtilWithLogo.encodeDrawLogoQRCode(logoFile, "Test2", "https://www.baidu.com/");
 		response.setCharacterEncoding("UTF-8");
-	    response.setContentType("image/jpeg;charset=UTF-8");
+	    response.setContentType("image/png;charset=UTF-8");
 	    response.setContentLength(out.size());
 	    ServletOutputStream outputStream = response.getOutputStream();
 	    outputStream.write(out.toByteArray());
