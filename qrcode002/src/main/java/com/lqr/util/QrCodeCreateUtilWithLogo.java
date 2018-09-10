@@ -150,7 +150,7 @@ public class QrCodeCreateUtilWithLogo {
      * @throws IOException 
      */
     public static ByteArrayOutputStream encodeDrawLogoQRCode(File logoFile, String note, String qrUrl) throws IOException  {
-        BufferedImage image = QrCodeCreateUtilWithLogo.drawLogoQRCode(logoFile, note, qrUrl);
+        BufferedImage image = drawLogoQRCode(logoFile, note, qrUrl);
         //创建储存图片二进制流的输出流
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         //将二进制数据写入ByteArrayOutputStream
